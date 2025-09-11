@@ -243,3 +243,5 @@ person.name = "Kim";
 
 console.log(person); // {name: "Kim"}
 ```
+
+&nbsp;
