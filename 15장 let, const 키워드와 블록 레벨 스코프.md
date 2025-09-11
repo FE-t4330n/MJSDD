@@ -168,3 +168,78 @@ let x = 1;
 console.log(window.x); // undefined
 console.log(x); // 1
 ```
+
+**[예제 15-13]**
+
+```js
+const foo = 1;
+```
+
+**[예제 15-14]**
+
+```js
+const foo; // SyntaxError: Missing initializer in const declaration
+```
+
+**[예제 15-15]**
+
+```js
+{
+  // 변수 호이스팅이 발생하지 않는 것처럼 동작한다
+  console.log(foo); // ReferenceError: Cannot access 'foo' before initialization
+  const foo = 1;
+  console.log(foo); // 1
+}
+
+// 블록 레벨 스코프를 갖는다.
+console.log(foo); // ReferenceError: foo is not defined
+```
+
+**[예제 15-16]**
+
+```js
+const foo = 1;
+foo = 2; // TypeError: Assignment to constant variable.
+```
+
+**[예제 15-17]**
+
+```js
+// 세전 가격
+let preTaxPrice = 100;
+
+// 세후 가격
+// 0.1의 의미를 명확히 알기 어렵기 때문에 가독성이 좋지 않다.
+let afterTaxPrice = preTaxPrice + preTaxPrice * 0.1;
+
+console.log(afterTaxPrice); // 110
+```
+
+**[예제 15-18]**
+
+```js
+// 세율을 의미하는 0.1은 변경할 수 없는 상수로서 사용될 값이다.
+// 변수 이름을 대문자로 선언해 상수임을 명확히 나타낸다.
+const TAX_RATE = 0.1;
+
+// 세전 가격
+let preTaxPrice = 100;
+
+// 세후 가격
+let afterTaxPrice = preTaxPrice + preTaxPrice * TAX_RATE;
+
+console.log(afterTaxPrice); // 110
+```
+
+**[예제 15-19]**
+
+```js
+const person = {
+  name: "Lee",
+};
+
+// 객체는 변경 가능한 값이다. 따라서 재할당없이 변경이 가능하다.
+person.name = "Kim";
+
+console.log(person); // {name: "Kim"}
+```
