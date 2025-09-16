@@ -90,3 +90,60 @@ foo();
   foo();
 })();
 ```
+
+**[예제 20-08]**
+
+```js
+(function () {
+  "use strict";
+
+  x = 1;
+  console.log(x); // ReferenceError: x is not defined
+})();
+```
+
+**[예제 20-09]**
+
+```js
+(function () {
+  "use strict";
+
+  var x = 1;
+  delete x;
+  // SyntaxError: Delete of an unqualified identifier in strict mode.
+
+  function foo(a) {
+    delete a;
+    // SyntaxError: Delete of an unqualified identifier in strict mode.
+  }
+  delete foo;
+  // SyntaxError: Delete of an unqualified identifier in strict mode.
+})();
+```
+
+**[예제 20-10]**
+
+```js
+(function () {
+  "use strict";
+
+  //SyntaxError: Duplicate parameter name not allowed in this context
+  function foo(x, x) {
+    return x + x;
+  }
+  console.log(foo(1, 2));
+})();
+```
+
+**[예제 20-11]**
+
+```js
+(function () {
+  "use strict";
+
+  // SyntaxError: Strict mode code may not include a with statement
+  with ({ x: 1 }) {
+    console.log(x);
+  }
+})();
+```
