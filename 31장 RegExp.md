@@ -102,3 +102,254 @@ target.match(/is/g);
 target.match(/is/gi);
 // -> ["Is", "is", "is"]
 ```
+
+**[예제 31-10]**
+
+```js
+const target = "Is this all there is?";
+
+// 'is' 문자열과 매치하는 패턴. 플래그가 생략되었으므로 대소문자를 구별한다.
+const regExp = /is/;
+
+// target과 정규 표현식이 매치하는지 테스트한다.
+regExp.test(target); // -> true
+
+// target과 정규 표현식의 매칭 결과를 구한다.
+target.match(regExp);
+// -> ["is", index: 5, input: "Is this all there is?", groups: undefined]
+```
+
+**[예제 31-11]**
+
+```js
+const target = "Is this all there is?";
+
+// 'is' 문자열과 매치하는 패턴. 플래그 i를 추가하면 대소문자를 구별하지 않는다.
+const regExp = /is/i;
+
+target.match(regExp);
+// -> ["Is", index: 0, input: "Is this all there is?", groups: undefined]
+```
+
+**[예제 31-12]**
+
+```js
+const target = "Is this all there is?";
+
+// 'is' 문자열과 매치하는 패턴.
+// 플래그 g를 추가하면 대상 문자열 내에서 패턴과 일치하는 모든 문자열을 전역 검색한다.
+const regExp = /is/gi;
+
+target.match(regExp); // -> ["Is", "is", "is"]
+```
+
+**[예제 31-13]**
+
+```js
+const target = "Is this all there is?";
+
+// 임의의 3자리 문자열을 대소문자를 구별하여 전역 검색한다.
+const regExp = /.../g;
+
+target.match(regExp); // -> ["Is ", "thi", "s a", "ll ", "the", "re ", "is?"]
+```
+
+**[예제 31-14]**
+
+```js
+const target = "A AA B BB Aa Bb AAA";
+
+// 'A'가 최소 1번, 최대 2번 반복되는 문자열을 전역 검색한다.
+const regExp = /A{1,2}/g;
+
+target.match(regExp); // -> ["A", "AA", "A", "AA", "A"]
+```
+
+**[예제 31-15]**
+
+```js
+const target = "A AA B BB Aa Bb AAA";
+
+// 'A'가 2번 반복되는 문자열을 전역 검색한다.
+const regExp = /A{2}/g;
+
+target.match(regExp); // -> ["AA", "AA"]
+```
+
+**[예제 31-16]**
+
+```js
+const target = "A AA B BB Aa Bb AAA";
+
+// 'A'가 최소 2번 이상 반복되는 문자열을 전역 검색한다.
+const regExp = /A{2,}/g;
+
+target.match(regExp); // -> ["AA", "AAA"]
+```
+
+**[예제 31-17]**
+
+```js
+const target = "A AA B BB Aa Bb AAA";
+
+// 'A'가 최소 한 번 이상 반복되는 문자열('A, 'AA', 'AAA', ...)을 전역 검색한다.
+const regExp = /A+/g;
+
+target.match(regExp); // -> ["A", "AA", "A", "AAA"]
+```
+
+**[예제 31-18]**
+
+```js
+const target = "color colour";
+
+// 'colo' 다음 'u'가 최대 한 번(0번 포함) 이상 반복되고 'r'이 이어지는 문자열 'color', 'colour'를 전역 검색한다.
+const regExp = /colou?r/g;
+
+target.match(regExp); // -> ["color", "colour"]
+```
+
+**[예제 31-19]**
+
+```js
+const target = "A AA B BB Aa Bb";
+
+// 'A' 또는 'B'를 전역 검색한다.
+const regExp = /A|B/g;
+
+target.match(regExp); // -> ["A", "A", "A", "B", "B", "B", "A", "B"]
+```
+
+**[예제 31-20]**
+
+```js
+const target = "A AA B BB Aa Bb";
+
+// 'A' 또는 'B'가 한 번 이상 반복되는 문자열을 전역 검색한다.
+// 'A', 'AA', 'AAA', ... 또는 'B', 'BB', 'BBB', ...
+const regExp = /A+|B+/g;
+
+target.match(regExp); // -> ["A", "AA", "B", "BB", "A", "B"]
+```
+
+**[예제 31-21]**
+
+```js
+const target = "A AA B BB Aa Bb";
+
+// 'A' 또는 'B'가 한 번 이상 반복되는 문자열을 전역 검색한다.
+// 'A', 'AA', 'AAA', ... 또는 'B', 'BB', 'BBB', ...
+const regExp = /[AB]+/g;
+
+target.match(regExp); // -> ["A", "AA", "B", "BB", "A", "B"]
+```
+
+**[예제 31-22]**
+
+```js
+const target = "A AA BB ZZ Aa Bb";
+
+// 'A' ~ 'Z'가 한 번 이상 반복되는 문자열을 전역 검색한다.
+// 'A', 'AA', 'AAA', ... 또는 'B', 'BB', 'BBB', ... ~ 또는 'Z', 'ZZ', 'ZZZ', ...
+const regExp = /[A-Z]+/g;
+
+target.match(regExp); // -> ["A", "AA", "BB", "ZZ", "A", "B"]
+```
+
+**[예제 31-23]**
+
+```js
+const target = "AA BB Aa Bb 12";
+
+// 'A' ~ 'Z' 또는 'a' ~ 'z'가 한 번 이상 반복되는 문자열을 전역 검색한다.
+const regExp = /[A-Za-z]+/g;
+
+target.match(regExp); // -> ["AA", "BB", "Aa", "Bb"]
+```
+
+**[예제 31-24]**
+
+```js
+const target = "AA BB 12,345";
+
+// '0' ~ '9'가 한 번 이상 반복되는 문자열을 전역 검색한다.
+const regExp = /[0-9]+/g;
+
+target.match(regExp); // -> ["12", "345"]
+```
+
+**[예제 31-25]**
+
+```js
+const target = "AA BB 12,345";
+
+// '0' ~ '9' 또는 ','가 한 번 이상 반복되는 문자열을 전역 검색한다.
+const regExp = /[0-9,]+/g;
+
+target.match(regExp); // -> ["12,345"]
+```
+
+**[예제 31-26]**
+
+```js
+const target = "AA BB 12,345";
+
+// '0' ~ '9' 또는 ','가 한 번 이상 반복되는 문자열을 전역 검색한다.
+let regExp = /[\d,]+/g;
+
+target.match(regExp); // -> ["12,345"]
+
+// '0' ~ '9'가 아닌 문자(숫자가 아닌 문자) 또는 ','가 한 번 이상 반복되는 문자열을 전역 검색한다.
+regExp = /[\D,]+/g;
+
+target.match(regExp); // -> ["AA BB ", ","]
+```
+
+**[예제 31-27]**
+
+```js
+const target = "Aa Bb 12,345 _$%&";
+
+// 알파벳, 숫자, 언더스코어, ','가 한 번 이상 반복되는 문자열을 전역 검색한다.
+let regExp = /[\w,]+/g;
+
+target.match(regExp); // -> ["Aa", "Bb", "12,345", "_"]
+
+// 알파벳, 숫자, 언더스코어가 아닌 문자 또는 ','가 한 번 이상 반복되는 문자열을 전역 검색한다.
+regExp = /[\W,]+/g;
+
+target.match(regExp); // -> [" ", " ", ",", " ", "$%&"]
+```
+
+**[예제 31-28]**
+
+```js
+const target = "AA BB 12 Aa Bb";
+
+// 숫자를 제외한 문자열을 전역 검색한다.
+const regExp = /[^0-9]+/g;
+
+target.match(regExp); // -> ["AA BB ", " Aa Bb"]
+```
+
+**[예제 31-29]**
+
+```js
+const target = "https://poiemaweb.com";
+
+// 'https'로 시작하는지 검사한다.
+const regExp = /^https/;
+
+regExp.test(target); // -> true
+```
+
+**[예제 31-30]**
+
+```js
+const target = "https://poiemaweb.com";
+
+// 'com'으로 끝나는지 검사한다.
+const regExp = /com$/;
+
+regExp.test(target); // -> true
+```
