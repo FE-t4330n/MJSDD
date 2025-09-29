@@ -44,3 +44,39 @@ const count = (str, char) => (str.match(new RegExp(char, "gi")) ?? []).length;
 count("Is this all there is?", "is"); // -> 3
 count("Is this all there is?", "xx"); // -> 0
 ```
+
+**[예제 31-05]**
+
+```js
+const target = "Is this all there is?";
+const regExp = /is/;
+
+regExp.exec(target); // -> ["is", index: 5, input: "Is this all there is?", groups: undefined]
+```
+
+**[예제 31-06]**
+
+```js
+const target = "Is this all there is?";
+const regExp = /is/;
+
+regExp.test(target); // -> true
+```
+
+**[예제 31-07]**
+
+```js
+const target = "Is this all there is?";
+const regExp = /is/;
+
+target.match(regExp); // -> ["is", index: 5, input: "Is this all there is?", groups: undefined]
+```
+
+**[예제 31-08]**
+
+```js
+const target = "Is this all there is?";
+const regExp = /is/g;
+
+target.match(regExp); // -> ["is", "is"]
+```
