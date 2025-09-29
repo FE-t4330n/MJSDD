@@ -51,3 +51,10 @@ String(Infinity); // -> "Infinity"
 String(true); // -> "true"
 String(false); // -> "false"
 ```
+
+**[예제 32-07]**
+
+```js
+"Hello".length; // -> 5
+"안녕하세요!".length; // -> 6
+```
