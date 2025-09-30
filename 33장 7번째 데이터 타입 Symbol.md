@@ -81,3 +81,61 @@ const s2 = Symbol("foo");
 // 전역 심벌 레지스트리에 저장된 심벌 값의 키를 추출
 Symbol.keyFor(s2); // -> undefined
 ```
+
+**[예제 33-09]**
+
+```js
+// 위, 아래, 왼쪽, 오른쪽을 나타내는 상수를 정의한다.
+// 이때 값 1, 2, 3, 4에는 특별한 의미가 없고 상수 이름에 의미가 있다.
+const Direction = {
+  UP: 1,
+  DOWN: 2,
+  LEFT: 3,
+  RIGHT: 4,
+};
+
+// 변수에 상수를 할당
+const myDirection = Direction.UP;
+
+if (myDirection === Direction.UP) {
+  console.log("You are going UP.");
+}
+```
+
+**[예제 33-10]**
+
+```js
+// 위, 아래, 왼쪽, 오른쪽을 나타내는 상수를 정의한다.
+// 중복될 가능성이 없는 심벌 값으로 상수 값을 생성한다.
+const Direction = {
+  UP: Symbol("up"),
+  DOWN: Symbol("down"),
+  LEFT: Symbol("left"),
+  RIGHT: Symbol("right"),
+};
+
+const myDirection = Direction.UP;
+
+if (myDirection === Direction.UP) {
+  console.log("You are going UP.");
+}
+```
+
+**[예제 33-11]**
+
+```js
+// js enum
+// Direction 객체는 불변 객체이며 프로퍼티는 유일무이한 값이다.
+const Direction = Object.freeze({
+  UP: Symbol("up"),
+  DOWN: Symbol("down"),
+  LEFT: Symbol("left"),
+  RIGHT: Symbol("right"),
+});
+
+const myDirection = Direction.UP;
+
+if (myDirection === Direction.UP) {
+  console.log("You are going UP.");
+}
+```
