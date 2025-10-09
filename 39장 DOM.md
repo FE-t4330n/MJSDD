@@ -890,3 +890,549 @@ $elems.forEach((elem) => (elem.className = "blue"));
   </script>
 </html>
 ```
+
+**[예제 39-41]**
+
+```html
+<!DOCTYPE html>
+<html>
+  <body>
+    <div id="foo">Hello <span>world!</span></div>
+  </body>
+  <script>
+    // #foo 요소의 콘텐츠 영역 내의 HTML 마크업을 문자열로 취득한다.
+    console.log(document.getElementById("foo").innerHTML);
+    // "Hello <span>world!</span>"
+  </script>
+</html>
+```
+
+**[예제 39-42]**
+
+```html
+<!DOCTYPE html>
+<html>
+  <body>
+    <div id="foo">Hello <span>world!</span></div>
+  </body>
+  <script>
+    // HTML 마크업이 파싱되어 요소 노드의 자식 노드로 DOM에 반영된다.
+    document.getElementById("foo").innerHTML = "Hi <span>there!</span>";
+  </script>
+</html>
+```
+
+**[예제 39-43]**
+
+```html
+<!DOCTYPE html>
+<html>
+  <body>
+    <ul id="fruits">
+      <li class="apple">Apple</li>
+    </ul>
+  </body>
+  <script>
+    const $fruits = document.getElementById("fruits");
+
+    // 노드 추가
+    $fruits.innerHTML += '<li class="banana">Banana</li>';
+
+    // 노드 교체
+    $fruits.innerHTML = '<li class="orange">Orange</li>';
+
+    // 노드 삭제
+    $fruits.innerHTML = "";
+  </script>
+</html>
+```
+
+**[예제 39-44]**
+
+```html
+<!DOCTYPE html>
+<html>
+  <body>
+    <div id="foo">Hello</div>
+  </body>
+  <script>
+    // innerHTML 프로퍼티로 스크립트 태그를 삽입하여 자바스크립트가 실행되도록 한다.
+    // HTML5는 innerHTML 프로퍼티로 삽입된 script 요소 내의 자바스크립트 코드를 실행하지 않는다.
+    document.getElementById('foo').innerHTML
+      = '<script>alert(document.cookie)</script>';
+  </script>
+</html>
+```
+
+**[예제 39-45]**
+
+```html
+<!DOCTYPE html>
+<html>
+  <body>
+    <div id="foo">Hello</div>
+  </body>
+  <script>
+    // 에러 이벤트를 강제로 발생시켜서 자바스크립트 코드가 실행되도록 한다.
+    document.getElementById(
+      "foo"
+    ).innerHTML = `<img src="x" onerror="alert(document.cookie)">`;
+  </script>
+</html>
+```
+
+**[예제 39-46]**
+
+```html
+<!DOCTYPE html>
+<html>
+  <body>
+    <ul id="fruits">
+      <li class="apple">Apple</li>
+    </ul>
+  </body>
+  <script>
+    const $fruits = document.getElementById("fruits");
+
+    // 노드 추가
+    $fruits.innerHTML += '<li class="banana">Banana</li>';
+  </script>
+</html>
+```
+
+<div class="result"></div>
+
+**[예제 39-47]**
+
+```js
+$fruits.innerHTML += '<li class="banana">Banana</li>';
+```
+
+**[예제 39-48]**
+
+```js
+$fruits.innerHTML = $fruits.innerHTML + '<li class="banana">Banana</li>';
+// '<li class="apple">Apple</li>' + '<li class="banana">Banana</li>'
+```
+
+**[예제 39-49]**
+
+```html
+<ul id="fruits">
+  <li class="apple">Apple</li>
+  <li class="orange">Orange</li>
+</ul>
+```
+
+**[예제 39-50]**
+
+```html
+<!DOCTYPE html>
+<html>
+  <body>
+    <!-- beforebegin -->
+    <div id="foo">
+      <!-- afterbegin -->
+      text
+      <!-- beforeend -->
+    </div>
+    <!-- afterend -->
+  </body>
+  <script>
+    const $foo = document.getElementById("foo");
+
+    $foo.insertAdjacentHTML("beforebegin", "<p>beforebegin</p>");
+    $foo.insertAdjacentHTML("afterbegin", "<p>afterbegin</p>");
+    $foo.insertAdjacentHTML("beforeend", "<p>beforeend</p>");
+    $foo.insertAdjacentHTML("afterend", "<p>afterend</p>");
+  </script>
+</html>
+```
+
+**[예제 39-51]**
+
+```html
+<!DOCTYPE html>
+<html>
+  <body>
+    <ul id="fruits">
+      <li>Apple</li>
+    </ul>
+  </body>
+  <script>
+    const $fruits = document.getElementById("fruits");
+
+    // 1. 요소 노드 생성
+    const $li = document.createElement("li");
+
+    // 2. 텍스트 노드 생성
+    const textNode = document.createTextNode("Banana");
+
+    // 3. 텍스트 노드를 $li 요소 노드의 자식 노드로 추가
+    $li.appendChild(textNode);
+
+    // 4. $li 요소 노드를 #fruits 요소 노드의 마지막 자식 노드로 추가
+    $fruits.appendChild($li);
+  </script>
+</html>
+```
+
+**[예제 39-52]**
+
+```js
+// 1. 요소 노드 생성
+const $li = document.createElement("li");
+```
+
+**[예제 39-53]**
+
+```js
+// 1. 요소 노드 생성
+const $li = document.createElement("li");
+// 생성된 요소 노드는 아무런 자식 노드가 없다.
+console.log($li.childNodes); // NodeList []
+```
+
+**[예제 39-54]**
+
+```js
+// 2. 텍스트 노드 생성
+const textNode = document.createTextNode("Banana");
+```
+
+**[예제 39-55]**
+
+```js
+// 3. 텍스트 노드를 $li 요소 노드의 자식 노드로 추가
+$li.appendChild(textNode);
+```
+
+**[예제 39-56]**
+
+```js
+// 텍스트 노드를 생성하여 요소 노드의 자식 노드로 추가
+$li.appendChild(document.createTextNode("Banana"));
+
+// $li 요소 노드에 자식 노드가 하나도 없는 위 코드와 동일하게 동작한다.
+$li.textContent = "Banana";
+```
+
+**[예제 39-57]**
+
+```js
+// 4. $li 요소 노드를 #fruits 요소 노드의 마지막 자식 노드로 추가
+$fruits.appendChild($li);
+```
+
+**[예제 39-58]**
+
+```html
+<!DOCTYPE html>
+<html>
+  <body>
+    <ul id="fruits"></ul>
+  </body>
+  <script>
+    const $fruits = document.getElementById("fruits");
+
+    ["Apple", "Banana", "Orange"].forEach((text) => {
+      // 1. 요소 노드 생성
+      const $li = document.createElement("li");
+
+      // 2. 텍스트 노드 생성
+      const textNode = document.createTextNode(text);
+
+      // 3. 텍스트 노드를 $li 요소 노드의 자식 노드로 추가
+      $li.appendChild(textNode);
+
+      // 4. $li 요소 노드를 #fruits 요소 노드의 마지막 자식 노드로 추가
+      $fruits.appendChild($li);
+    });
+  </script>
+</html>
+```
+
+**[예제 39-59]**
+
+```html
+<!DOCTYPE html>
+<html>
+  <body>
+    <ul id="fruits"></ul>
+  </body>
+  <script>
+    const $fruits = document.getElementById("fruits");
+
+    // 컨테이너 요소 노드 생성
+    const $container = document.createElement("div");
+
+    ["Apple", "Banana", "Orange"].forEach((text) => {
+      // 1. 요소 노드 생성
+      const $li = document.createElement("li");
+
+      // 2. 텍스트 노드 생성
+      const textNode = document.createTextNode(text);
+
+      // 3. 텍스트 노드를 $li 요소 노드의 자식 노드로 추가
+      $li.appendChild(textNode);
+
+      // 4. $li 요소 노드를 컨테이너 요소의 마지막 자식 노드로 추가
+      $container.appendChild($li);
+    });
+
+    // 5. 컨테이너 요소 노드를 #fruits 요소 노드의 마지막 자식 노드로 추가
+    $fruits.appendChild($container);
+  </script>
+</html>
+```
+
+**[예제 39-60]**
+
+```html
+<ul id="fruits">
+  <div>
+    <li>apple</li>
+    <li>banana</li>
+    <li>orange</li>
+  </div>
+</ul>
+```
+
+**[예제 39-61]**
+
+```html
+<!DOCTYPE html>
+<html>
+  <body>
+    <ul id="fruits"></ul>
+  </body>
+  <script>
+    const $fruits = document.getElementById("fruits");
+
+    // DocumentFragment 노드 생성
+    const $fragment = document.createDocumentFragment();
+
+    ["Apple", "Banana", "Orange"].forEach((text) => {
+      // 1. 요소 노드 생성
+      const $li = document.createElement("li");
+
+      // 2. 텍스트 노드 생성
+      const textNode = document.createTextNode(text);
+
+      // 3. 텍스트 노드를 $li 요소 노드의 자식 노드로 추가
+      $li.appendChild(textNode);
+
+      // 4. $li 요소 노드를 DocumentFragment 노드의 마지막 자식 노드로 추가
+      $fragment.appendChild($li);
+    });
+
+    // 5. DocumentFragment 노드를 #fruits 요소 노드의 마지막 자식 노드로 추가
+    $fruits.appendChild($fragment);
+  </script>
+</html>
+```
+
+**[예제 39-62]**
+
+```html
+<!DOCTYPE html>
+<html>
+  <body>
+    <ul id="fruits">
+      <li>Apple</li>
+      <li>Banana</li>
+    </ul>
+  </body>
+  <script>
+    // 요소 노드 생성
+    const $li = document.createElement("li");
+
+    // 텍스트 노드를 $li 요소 노드의 마지막 자식 노드로 추가
+    $li.appendChild(document.createTextNode("Orange"));
+
+    // $li 요소 노드를 #fruits 요소 노드의 마지막 자식 노드로 추가
+    document.getElementById("fruits").appendChild($li);
+  </script>
+</html>
+```
+
+**[예제 39-63]**
+
+```html
+<!DOCTYPE html>
+<html>
+  <body>
+    <ul id="fruits">
+      <li>Apple</li>
+      <li>Banana</li>
+    </ul>
+  </body>
+  <script>
+    const $fruits = document.getElementById("fruits");
+
+    // 요소 노드 생성
+    const $li = document.createElement("li");
+
+    // 텍스트 노드를 $li 요소 노드의 마지막 자식 노드로 추가
+    $li.appendChild(document.createTextNode("Orange"));
+
+    // $li 요소 노드를 #fruits 요소 노드의 마지막 자식 요소 앞에 삽입
+    $fruits.insertBefore($li, $fruits.lastElementChild);
+    // Apple - Orange - Banana
+  </script>
+</html>
+```
+
+**[예제 39-64]**
+
+```html
+<!DOCTYPE html>
+<html>
+  <body>
+    <div>test</div>
+    <ul id="fruits">
+      <li>Apple</li>
+      <li>Banana</li>
+    </ul>
+  </body>
+  <script>
+    const $fruits = document.getElementById("fruits");
+
+    // 요소 노드 생성
+    const $li = document.createElement("li");
+
+    // 텍스트 노드를 $li 요소 노드의 마지막 자식 노드로 추가
+    $li.appendChild(document.createTextNode("Orange"));
+
+    // 두 번째 인수로 전달받은 노드는 반드시 #fruits 요소 노드의 자식 노드이어야 한다.
+    $fruits.insertBefore($li, document.querySelector("div"));
+    // DOMException
+  </script>
+</html>
+```
+
+**[예제 39-65]**
+
+```html
+<!DOCTYPE html>
+<html>
+  <body>
+    <ul id="fruits">
+      <li>Apple</li>
+      <li>Banana</li>
+    </ul>
+  </body>
+  <script>
+    const $fruits = document.getElementById("fruits");
+
+    // 요소 노드 생성
+    const $li = document.createElement("li");
+
+    // 텍스트 노드를 $li 요소 노드의 마지막 자식 노드로 추가
+    $li.appendChild(document.createTextNode("Orange"));
+
+    // 두 번째 인수로 전달받은 노드가 null이면 $li 요소 노드를 #fruits 요소 노드의 마지막 자식 노드로 추가
+    $fruits.insertBefore($li, null);
+  </script>
+</html>
+```
+
+**[예제 39-66]**
+
+```html
+<!DOCTYPE html>
+<html>
+  <body>
+    <ul id="fruits">
+      <li>Apple</li>
+      <li>Banana</li>
+      <li>Orange</li>
+    </ul>
+  </body>
+  <script>
+    const $fruits = document.getElementById("fruits");
+
+    // 이미 존재하는 요소 노드를 취득
+    const [$apple, $banana] = $fruits.children;
+
+    // 이미 존재하는 $apple 요소 노드를 #fruits 요소 노드의 마지막 노드로 이동
+    $fruits.appendChild($apple); // Banana - Orange - Apple
+
+    // 이미 존재하는 $banana 요소 노드를 #fruits 요소의 마지막 자식 노드 앞으로 이동
+    $fruits.insertBefore($banana, $fruits.lastElementChild);
+    // Orange - Banana - Apple
+  </script>
+</html>
+```
+
+**[예제 39-67]**
+
+```html
+<!DOCTYPE html>
+<html>
+  <body>
+    <ul id="fruits">
+      <li>Apple</li>
+    </ul>
+  </body>
+  <script>
+    const $fruits = document.getElementById("fruits");
+    const $apple = $fruits.firstElementChild;
+
+    // $apple 요소를 얕은 복사하여 사본을 생성. 텍스트 노드가 없는 사본이 생성된다.
+    const $shallowClone = $apple.cloneNode();
+    // 사본 요소 노드에 텍스트 추가
+    $shallowClone.textContent = "Banana";
+    // 사본 요소 노드를 #fruits 요소 노드의 마지막 노드로 추가
+    $fruits.appendChild($shallowClone);
+
+    // #fruits 요소를 깊은 복사하여 모든 자손 노드가 포함된 사본을 생성
+    const $deepClone = $fruits.cloneNode(true);
+    // 사본 요소 노드를 #fruits 요소 노드의 마지막 노드로 추가
+    $fruits.appendChild($deepClone);
+  </script>
+</html>
+```
+
+**[예제 39-68]**
+
+```html
+<!DOCTYPE html>
+<html>
+  <body>
+    <ul id="fruits">
+      <li>Apple</li>
+    </ul>
+  </body>
+  <script>
+    const $fruits = document.getElementById("fruits");
+
+    // 기존 노드와 교체할 요소 노드를 생성
+    const $newChild = document.createElement("li");
+    $newChild.textContent = "Banana";
+
+    // #fruits 요소 노드의 첫 번째 자식 요소 노드를 $newChild 요소 노드로 교체
+    $fruits.replaceChild($newChild, $fruits.firstElementChild);
+  </script>
+</html>
+```
+
+**[예제 39-69]**
+
+```html
+<!DOCTYPE html>
+<html>
+  <body>
+    <ul id="fruits">
+      <li>Apple</li>
+      <li>Banana</li>
+    </ul>
+  </body>
+  <script>
+    const $fruits = document.getElementById("fruits");
+
+    // #fruits 요소 노드의 마지막 요소를 DOM에서 삭제
+    $fruits.removeChild($fruits.lastElementChild);
+  </script>
+</html>
+```
