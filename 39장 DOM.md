@@ -1960,3 +1960,5 @@ $box.classList.toggle("foo", false); // -> class="box blue"
   </body>
 </html>
 ```
+
+&nbsp;
