@@ -1436,3 +1436,292 @@ $fruits.appendChild($li);
   </script>
 </html>
 ```
+
+**[예제 39-70]**
+
+```html
+<input id="user" type="text" value="ungmo2" />
+```
+
+**[예제 39-71]**
+
+```html
+<!DOCTYPE html>
+<html>
+  <body>
+    <input id="user" type="text" value="ungmo2" />
+    <script>
+      // 요소 노드의 attribute 프로퍼티는 요소 노드의 모든 어트리뷰트 노드의 참조가 담긴 NamedNodeMap 객체를 반환한다.
+      const { attributes } = document.getElementById("user");
+      console.log(attributes);
+      // NamedNodeMap {0: id, 1: type, 2: value, id: id, type: type, value: value, length: 3}
+
+      // 어트리뷰트 값 취득
+      console.log(attributes.id.value); // user
+      console.log(attributes.type.value); // text
+      console.log(attributes.value.value); // ungmo2
+    </script>
+  </body>
+</html>
+```
+
+**[예제 39-72]**
+
+```html
+<!DOCTYPE html>
+<html>
+  <body>
+    <input id="user" type="text" value="ungmo2" />
+    <script>
+      const $input = document.getElementById("user");
+
+      // value 어트리뷰트 값을 취득
+      const inputValue = $input.getAttribute("value");
+      console.log(inputValue); // ungmo2
+
+      // value 어트리뷰트 값을 변경
+      $input.setAttribute("value", "foo");
+      console.log($input.getAttribute("value")); // foo
+    </script>
+  </body>
+</html>
+```
+
+**[예제 39-73]**
+
+```html
+<!DOCTYPE html>
+<html>
+  <body>
+    <input id="user" type="text" value="ungmo2" />
+    <script>
+      const $input = document.getElementById("user");
+
+      // value 어트리뷰트의 존재 확인
+      if ($input.hasAttribute("value")) {
+        // value 어트리뷰트 삭제
+        $input.removeAttribute("value");
+      }
+
+      // value 어트리뷰트가 삭제되었다.
+      console.log($input.hasAttribute("value")); // false
+    </script>
+  </body>
+</html>
+```
+
+**[예제 39-74]**
+
+```html
+<!DOCTYPE html>
+<html>
+  <body>
+    <input id="user" type="text" value="ungmo2" />
+    <script>
+      const $input = document.getElementById("user");
+
+      // 요소 노드의 value 프로퍼티 값을 변경
+      $input.value = "foo";
+
+      // 요소 노드의 value 프로퍼티 값을 참조
+      console.log($input.value); // foo
+    </script>
+  </body>
+</html>
+```
+
+**[예제 39-75]**
+
+```html
+<!DOCTYPE html>
+<html>
+  <body>
+    <input id="user" type="text" value="ungmo2" />
+    <script>
+      const $input = document.getElementById("user");
+
+      // attributes 프로퍼티에 저장된 value 어트리뷰트 값
+      console.log($input.getAttribute("value")); // ungmo2
+
+      // 요소 노드의 value 프로퍼티에 저장된 value 어트리뷰트 값
+      console.log($input.value); // ungmo2
+    </script>
+  </body>
+</html>
+```
+
+**[예제 39-76]**
+
+```js
+// attributes 프로퍼티에 저장된 value 어트리뷰트 값을 취득한다. 결과는 언제나 동일하다.
+document.getElementById("user").getAttribute("value"); // ungmo2
+```
+
+**[예제 39-77]**
+
+```html
+<!DOCTYPE html>
+<html>
+  <body>
+    <input id="user" type="text" value="ungmo2" />
+    <script>
+      // HTML 요소에 지정한 어트리뷰트 값, 즉 초기 상태 값을 변경한다.
+      document.getElementById("user").setAttribute("value", "foo");
+    </script>
+  </body>
+</html>
+```
+
+**[예제 39-78]**
+
+```html
+<!DOCTYPE html>
+<html>
+  <body>
+    <input id="user" type="text" value="ungmo2" />
+    <script>
+      const $input = document.getElementById("user");
+
+      // 사용자가 input 요소의 입력 필드에 값을 입력할 때마다 input 요소 노드의
+      // value 프로퍼티 값, 즉 최신 상태 값을 취득한다. value 프로퍼티 값은 사용자의 입력에
+      // 의해 동적으로 변경된다.
+      $input.oninput = () => {
+        console.log("value 프로퍼티 값", $input.value);
+      };
+
+      // getAttribute 메서드로 취득한 HTML 어트리뷰트 값, 즉 초기 상태 값은 변하지 않고 유지된다.
+      console.log("value 어트리뷰트 값", $input.getAttribute("value"));
+    </script>
+  </body>
+</html>
+```
+
+**[예제 39-79]**
+
+```html
+<!DOCTYPE html>
+<html>
+  <body>
+    <input id="user" type="text" value="ungmo2" />
+    <script>
+      const $input = document.getElementById("user");
+
+      // DOM 프로퍼티에 값을 할당하여 HTML 요소의 최신 상태를 변경한다.
+      $input.value = "foo";
+      console.log($input.value); // foo
+
+      // getAttribute 메서드로 취득한 HTML 어트리뷰트 값, 즉 초기 상태 값은 변하지 않고 유지된다.
+      console.log($input.getAttribute("value")); // ungmo2
+    </script>
+  </body>
+</html>
+```
+
+**[예제 39-80]**
+
+```html
+<!DOCTYPE html>
+<html>
+  <body>
+    <input id="user" type="text" value="ungmo2" />
+    <script>
+      const $input = document.getElementById("user");
+
+      // id 어트리뷰트와 id 프로퍼티는 사용자 입력과 관계없이 항상 동일한 값으로 연동한다.
+      $input.id = "foo";
+
+      console.log($input.id); // foo
+      console.log($input.getAttribute("id")); // foo
+    </script>
+  </body>
+</html>
+```
+
+**[예제 39-81]**
+
+```html
+<!DOCTYPE html>
+<html>
+  <body>
+    <input type="checkbox" checked />
+    <script>
+      const $checkbox = document.querySelector("input[type=checkbox]");
+
+      // getAttribute 메서드로 취득한 어트리뷰트 값은 언제나 문자열이다.
+      console.log($checkbox.getAttribute("checked")); // ''
+
+      // DOM 프로퍼티로 취득한 최신 상태 값은 문자열이 아닐 수도 있다.
+      console.log($checkbox.checked); // true
+    </script>
+  </body>
+</html>
+```
+
+**[예제 39-82]**
+
+```html
+<!DOCTYPE html>
+<html>
+  <body>
+    <ul class="users">
+      <li id="1" data-user-id="7621" data-role="admin">Lee</li>
+      <li id="2" data-user-id="9524" data-role="subscriber">Kim</li>
+    </ul>
+  </body>
+</html>
+```
+
+**[예제 39-83]**
+
+```html
+<!DOCTYPE html>
+<html>
+  <body>
+    <ul class="users">
+      <li id="1" data-user-id="7621" data-role="admin">Lee</li>
+      <li id="2" data-user-id="9524" data-role="subscriber">Kim</li>
+    </ul>
+    <script>
+      const users = [...document.querySelector(".users").children];
+
+      // user-id가 '7621'인 요소 노드를 취득한다.
+      const user = users.find((user) => user.dataset.userId === "7621");
+      // user-id가 '7621'인 요소 노드에서 data-role의 값을 취득한다.
+      console.log(user.dataset.role); // "admin"
+
+      // user-id가 '7621'인 요소 노드의 data-role 값을 변경한다.
+      user.dataset.role = "subscriber";
+      // dataset 프로퍼티는 DOMStringMap 객체를 반환한다.
+      console.log(user.dataset); // DOMStringMap {userId: "7621", role: "subscriber"}
+    </script>
+  </body>
+</html>
+```
+
+**[예제 39-84]**
+
+```html
+<!DOCTYPE html>
+<html>
+  <body>
+    <ul class="users">
+      <li id="1" data-user-id="7621">Lee</li>
+      <li id="2" data-user-id="9524">Kim</li>
+    </ul>
+    <script>
+      const users = [...document.querySelector(".users").children];
+
+      // user-id가 '7621'인 요소 노드를 취득한다.
+      const user = users.find((user) => user.dataset.userId === "7621");
+
+      // user-id가 '7621'인 요소 노드에 새로운 data 어트리뷰트를 추가한다.
+      user.dataset.role = "admin";
+      console.log(user.dataset);
+      /*
+    DOMStringMap {userId: "7621", role: "admin"}
+    -> <li id="1" data-user-id="7621" data-role="admin">Lee</li>
+    */
+    </script>
+  </body>
+</html>
+```
