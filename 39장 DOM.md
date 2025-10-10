@@ -1725,3 +1725,238 @@ document.getElementById("user").getAttribute("value"); // ungmo2
   </body>
 </html>
 ```
+
+**[예제 39-85]**
+
+```html
+<!DOCTYPE html>
+<html>
+  <body>
+    <div style="color: red">Hello World</div>
+    <script>
+      const $div = document.querySelector("div");
+
+      // 인라인 스타일 취득
+      console.log($div.style); // CSSStyleDeclaration { 0: "color", ... }
+
+      // 인라인 스타일 변경
+      $div.style.color = "blue";
+
+      // 인라인 스타일 추가
+      $div.style.width = "100px";
+      $div.style.height = "100px";
+      $div.style.backgroundColor = "yellow";
+    </script>
+  </body>
+</html>
+```
+
+**[예제 39-86]**
+
+```js
+$div.style.backgroundColor = "yellow";
+```
+
+**[예제 39-87]**
+
+```js
+$div.style["background-color"] = "yellow";
+```
+
+**[예제 39-88]**
+
+```js
+$div.style.width = "100px";
+```
+
+**[예제 39-89]**
+
+```html
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      .box {
+        width: 100px;
+        height: 100px;
+        background-color: antiquewhite;
+      }
+      .red {
+        color: red;
+      }
+      .blue {
+        color: blue;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="box red">Hello World</div>
+    <script>
+      const $box = document.querySelector(".box");
+
+      // .box 요소의 class 어트리뷰트 값을 취득
+      console.log($box.className); // 'box red'
+
+      // .box 요소의 class 어트리뷰트 값 중에서 'red'만 'blue'로 변경
+      $box.className = $box.className.replace("red", "blue");
+    </script>
+  </body>
+</html>
+```
+
+**[예제 39-90]**
+
+```html
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      .box {
+        width: 100px;
+        height: 100px;
+        background-color: antiquewhite;
+      }
+      .red {
+        color: red;
+      }
+      .blue {
+        color: blue;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="box red">Hello World</div>
+    <script>
+      const $box = document.querySelector(".box");
+
+      // .box 요소의 class 어트리뷰트 정보를 담은 DOMTokenList 객체를 취득
+      // classList가 반환하는 DOMTokenList 객체는 HTMLCollection과 NodeList와 같이
+      // 노드 객체의 상태 변화를 실시간으로 반영하는 살아 있는(live) 객체다.
+      console.log($box.classList);
+      // DOMTokenList(2) [length: 2, value: "box blue", 0: "box", 1: "blue"]
+
+      // .box 요소의 class 어트리뷰트 값 중에서 'red'만 'blue'로 변경
+      $box.classList.replace("red", "blue");
+    </script>
+  </body>
+</html>
+```
+
+**[예제 39-91]**
+
+```js
+$box.classList.add("foo"); // -> class="box red foo"
+$box.classList.add("bar", "baz"); // -> class="box red foo bar baz"
+```
+
+\*\*[예제 39-92
+
+```js
+$box.classList.remove("foo"); // -> class="box red bar baz"
+$box.classList.remove("bar", "baz"); // -> class="box red"
+$box.classList.remove("x"); // -> class="box red"
+```
+
+**[예제 39-93]**
+
+```js
+$box.classList.item(0); // -> "box"
+$box.classList.item(1); // -> "red"
+```
+
+**[예제 39-94]**
+
+```js
+$box.classList.contains("box"); // -> true
+$box.classList.contains("blue"); // -> false
+```
+
+**[예제 39-95]**
+
+```js
+$box.classList.replace("red", "blue"); // -> class="box blue"
+```
+
+**[예제 39-96]**
+
+```js
+$box.classList.toggle("foo"); // -> class="box blue foo"
+$box.classList.toggle("foo"); // -> class="box blue"
+```
+
+**[예제 39-97]**
+
+```js
+// class 어트리뷰트에 강제로 'foo' 클래스를 추가
+$box.classList.toggle("foo", true); // -> class="box blue foo"
+// class 어트리뷰트에서 강제로 'foo' 클래스를 제거
+$box.classList.toggle("foo", false); // -> class="box blue"
+```
+
+**[예제 39-98]**
+
+```html
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      body {
+        color: red;
+      }
+      .box {
+        width: 100px;
+        height: 50px;
+        background-color: cornsilk;
+        border: 1px solid black;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="box">Box</div>
+    <script>
+      const $box = document.querySelector(".box");
+
+      // .box 요소에 적용된 모든 CSS 스타일을 담고 있는 CSSStyleDeclaration 객체를 취득
+      const computedStyle = window.getComputedStyle($box);
+      console.log(computedStyle); // CSSStyleDeclaration
+
+      // 임베딩 스타일
+      console.log(computedStyle.width); // 100px
+      console.log(computedStyle.height); // 50px
+      console.log(computedStyle.backgroundColor); // rgb(255, 248, 220)
+      console.log(computedStyle.border); // 1px solid rgb(0, 0, 0)
+
+      // 상속 스타일(body -> .box)
+      console.log(computedStyle.color); // rgb(255, 0, 0)
+
+      // 기본 스타일
+      console.log(computedStyle.display); // block
+    </script>
+  </body>
+</html>
+```
+
+**[예제 39-99]**
+
+```html
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      .box:before {
+        content: "Hello";
+      }
+    </style>
+  </head>
+  <body>
+    <div class="box">Box</div>
+    <script>
+      const $box = document.querySelector(".box");
+
+      // 의사 요소 :before의 스타일을 취득한다.
+      const computedStyle = window.getComputedStyle($box, ":before");
+      console.log(computedStyle.content); // "Hello"
+    </script>
+  </body>
+</html>
+```
