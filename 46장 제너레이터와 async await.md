@@ -205,3 +205,100 @@ console.log(res); // {value: 20, done: false}
 res = generator.next(20);
 console.log(res); // {value: 30, done: true}
 ```
+
+**[예제 46-10]**
+
+```js
+// 무한 이터러블을 생성하는 함수
+const infiniteFibonacci = (function () {
+  let [pre, cur] = [0, 1];
+
+  return {
+    [Symbol.iterator]() {
+      return this;
+    },
+    next() {
+      [pre, cur] = [cur, pre + cur];
+      // 무한 이터러블이므로 done 프로퍼티를 생략한다.
+      return { value: cur };
+    },
+  };
+})();
+
+// infiniteFibonacci는 무한 이터러블이다.
+for (const num of infiniteFibonacci) {
+  if (num > 10000) break;
+  console.log(num); // 1 2 3 5 8...2584 4181 6765
+}
+```
+
+**[예제 46-11]**
+
+```js
+// 무한 이터러블을 생성하는 제너레이터 함수
+const infiniteFibonacci = (function* () {
+  let [pre, cur] = [0, 1];
+
+  while (true) {
+    [pre, cur] = [cur, pre + cur];
+    yield cur;
+  }
+})();
+
+// infiniteFibonacci는 무한 이터러블이다.
+for (const num of infiniteFibonacci) {
+  if (num > 10000) break;
+  console.log(num); // 1 2 3 5 8...2584 4181 6765
+}
+```
+
+**[예제 46-12]**
+
+```js
+// node-fetch는 node.js 환경에서 window.fetch 함수를 사용하기 위한 패키지다.
+// 브라우저 환경에서 이 예제를 실행한다면 아래 코드는 필요 없다.
+// https://github.com/node-fetch/node-fetch
+const fetch = require("node-fetch");
+
+// 제너레이터 실행기
+const async = (generatorFunc) => {
+  const generator = generatorFunc(); // ②
+
+  const onResolved = (arg) => {
+    const result = generator.next(arg); // ⑤
+
+    return result.done
+      ? result.value // ⑨
+      : result.value.then((res) => onResolved(res)); // ⑦
+  };
+
+  return onResolved; // ③
+};
+
+async(function* fetchTodo() {
+  // ①
+  const url = "https://jsonplaceholder.typicode.com/todos/1";
+
+  const response = yield fetch(url); // ⑥
+  const todo = yield response.json(); // ⑧
+  console.log(todo);
+  // {userId: 1, id: 1, title: 'delectus aut autem', completed: false}
+})(); // ④
+```
+
+**[예제 46-13]**
+
+```js
+const fetch = require("node-fetch");
+// https://github.com/tj/co
+const co = require("co");
+
+co(function* fetchTodo() {
+  const url = "https://jsonplaceholder.typicode.com/todos/1";
+
+  const response = yield fetch(url);
+  const todo = yield response.json();
+  console.log(todo);
+  // { userId: 1, id: 1, title: 'delectus aut autem', completed: false }
+});
+```
