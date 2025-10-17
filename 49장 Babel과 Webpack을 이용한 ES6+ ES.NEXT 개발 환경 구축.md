@@ -160,3 +160,189 @@ console.log(f.bar());
   </body>
 </html>
 ```
+
+**[예제 49-13]**
+
+```json
+{
+  "name": "esnext-project",
+  "version": "1.0.0",
+  "scripts": {
+    "build": "babel src/js -w -d dist/js"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.10.3",
+    "@babel/core": "^7.10.3",
+    "@babel/plugin-proposal-class-properties": "^7.10.1",
+    "@babel/preset-env": "^7.10.3",
+    "webpack": "^4.43.0",
+    "webpack-cli": "^3.3.12"
+  }
+}
+```
+
+**[예제 49-14]**
+
+```json
+{
+  "name": "esnext-project",
+  "version": "1.0.0",
+  "scripts": {
+    "build": "webpack -w"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.10.3",
+    "@babel/core": "^7.10.3",
+    "@babel/plugin-proposal-class-properties": "^7.10.1",
+    "@babel/preset-env": "^7.10.3",
+    "babel-loader": "^8.1.0",
+    "webpack": "^4.43.0",
+    "webpack-cli": "^3.3.12"
+  }
+}
+```
+
+**[예제 49-15]**
+
+```js
+const path = require("path");
+
+module.exports = {
+  // entry file
+  // https://webpack.js.org/configuration/entry-context/#entry
+  entry: "./src/js/main.js",
+  // 번들링된 js 파일의 이름(filename)과 저장될 경로(path)를 지정
+  // https://webpack.js.org/configuration/output/#outputpath
+  // https://webpack.js.org/configuration/output/#outputfilename
+  output: {
+    path: path.resolve(__dirname, "dist"),
+    filename: "js/bundle.js",
+  },
+  // https://webpack.js.org/configuration/module
+  module: {
+    rules: [
+      {
+        test: /\.js$/,
+        include: [path.resolve(__dirname, "src/js")],
+        exclude: /node_modules/,
+        use: {
+          loader: "babel-loader",
+          options: {
+            presets: ["@babel/preset-env"],
+            plugins: ["@babel/plugin-proposal-class-properties"],
+          },
+        },
+      },
+    ],
+  },
+  devtool: "source-map",
+  // https://webpack.js.org/configuration/mode
+  mode: "development",
+};
+```
+
+**[예제 49-16]**
+
+```html
+<!DOCTYPE html>
+<html>
+  <body>
+    <script src="./dist/js/bundle.js"></script>
+  </body>
+</html>
+```
+
+**[예제 49-17]**
+
+```js
+// src/js/main.js
+import { pi, power, Foo } from "./lib";
+
+console.log(pi);
+console.log(power(pi, pi));
+
+const f = new Foo();
+console.log(f.foo());
+console.log(f.bar());
+
+// polyfill이 필요한 코드
+console.log(
+  new Promise((resolve, reject) => {
+    setTimeout(() => resolve(1), 100);
+  })
+);
+
+// polyfill이 필요한 코드
+console.log(Object.assign({}, { x: 1 }, { y: 2 }));
+
+// polyfill이 필요한 코드
+console.log(Array.from([1, 2, 3], (v) => v + v));
+```
+
+**[예제 49-18]**
+
+```js
+...
+// 190 line
+console.log(new Promise(function (resolve, reject) {
+  setTimeout(function () {
+    return resolve(1);
+  }, 100);
+})); // polyfill이 필요한 코드
+
+console.log(Object.assign({}, {
+  x: 1
+}, {
+  y: 2
+})); // polyfill이 필요한 코드
+
+console.log(Array.from([1, 2, 3], function (v) {
+  return v + v;
+}));
+...
+```
+
+**[예제 49-19]**
+
+```json
+{
+  "name": "esnext-project",
+  "version": "1.0.0",
+  "scripts": {
+    "build": "webpack -w"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.10.3",
+    "@babel/core": "^7.10.3",
+    "@babel/plugin-proposal-class-properties": "^7.10.1",
+    "@babel/preset-env": "^7.10.3",
+    "babel-loader": "^8.1.0",
+    "webpack": "^4.43.0",
+    "webpack-cli": "^3.3.12"
+  },
+  "dependencies": {
+    "@babel/polyfill": "^7.10.1"
+  }
+}
+```
+
+**[예제 49-20]**
+
+```js
+// src/js/main.js
+import "@babel/polyfill";
+import { pi, power, Foo } from './lib';
+...
+```
+
+**[예제 49-21]**
+
+```js
+const path = require('path');
+
+module.exports = {
+  // entry file
+  // https://webpack.js.org/configuration/entry-context/#entry
+  entry: ['@babel/polyfill', './src/js/main.js'],
+...
+```
